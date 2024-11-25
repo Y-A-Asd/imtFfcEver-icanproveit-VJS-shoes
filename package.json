@@ -6,12 +6,23 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "npx json-server --watch db.json --static ./public --port 5000"
   },
+  "keywords": [
+    "server",
+    "shopserver",
+    "shoesShop",
+    "json-server"
+  ],
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "json-server": "^1.0.0-beta.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "vite": "^5.4.10"
+  },
+  "dependencies": {
+    "navigo": "^8.11.1"
   }
 }
