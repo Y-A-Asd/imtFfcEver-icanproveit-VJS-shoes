@@ -73,7 +73,7 @@ export const homePage = (products) => {
                         element: "button",
                         children: ["Home"],
                         eventListener: [
-                            { event: "click", callback: () => router.navigate("/") },
+                            { event: "click", callback: () => router.navigate("/home") },
                         ],
                     }),
                     El({

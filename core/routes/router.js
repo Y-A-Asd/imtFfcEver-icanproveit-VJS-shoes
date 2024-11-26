@@ -67,7 +67,12 @@ router
         changePage(onboardingPage3);
     })
     .on("/login", () => {
-        changePage(loginPage);
+        if (localStorage.getItem("userLoggedIn") === "true") {
+            router.navigate("/home");
+        } else {
+
+            changePage(loginPage);
+        }
     })
     .on("/home", () => {
         if (localStorage.getItem("userLoggedIn") === "true") {
@@ -79,26 +84,34 @@ router
         }
     })
     .on("/brand", (params) => {
-        console.log(params.params.brand)
-        const brand = params.params.brand;
-        apiProxy.Products().then((products) => {
-            if (products) {
-                const filteredProducts = products.filter((product) => product.brand === brand);
-                console.log(filteredProducts)
-                changePage(brandPage, brand, filteredProducts);
-            }
-        });
+        if (localStorage.getItem("userLoggedIn") === "true") {
+            console.log(params.params.brand)
+            const brand = params.params.brand;
+            apiProxy.Products().then((products) => {
+                if (products) {
+                    const filteredProducts = products.filter((product) => product.brand === brand);
+                    console.log(filteredProducts)
+                    changePage(brandPage, brand, filteredProducts);
+                }
+            });
+        } else {
+            router.navigate("/login");
+        }
     })
     .on("/product/:id", (params) => {
-        const productId = params.data.id;
-        // Use apiProxy to fetch a single product by ID
-        apiProxy.Products(productId).then((product) => {
-            if (product) {
-                changePage(productDetailsPage, product); // Pass the fetched product to productDetailsPage
-            } else {
-                console.error("Product not found");
-                router.navigate("/home");
-            }
-        });
+        if (localStorage.getItem("userLoggedIn") === "true") {
+            const productId = params.data.id;
+            // Use apiProxy to fetch a single product by ID
+            apiProxy.Products(productId).then((product) => {
+                if (product) {
+                    changePage(productDetailsPage, product); // Pass the fetched product to productDetailsPage
+                } else {
+                    console.error("Product not found");
+                    router.navigate("/home");
+                }
+            });
+        } else {
+            router.navigate("/login");
+        }
     })
     .resolve();

@@ -31,6 +31,33 @@ export const brandPage = (brand, products) => {
           })
         ),
       }),
+        El({
+                element: "footer",
+                className: "navigation-menu",
+                children: [
+                    El({
+                        element: "button",
+                        children: ["Home"],
+                        eventListener: [
+                            { event: "click", callback: () => router.navigate("/home") },
+                        ],
+                    }),
+                    El({
+                        element: "button",
+                        children: ["Wishlist"],
+                        eventListener: [
+                            { event: "click", callback: () => router.navigate("/wishlist") },
+                        ],
+                    }),
+                    El({
+                        element: "button",
+                        children: ["Popular"],
+                        eventListener: [
+                            { event: "click", callback: () => router.navigate("/popular") },
+                        ],
+                    }),
+                ],
+            }),
     ],
   });
 };
