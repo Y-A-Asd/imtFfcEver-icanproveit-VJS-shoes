@@ -6,18 +6,41 @@ import {onboardingPage1} from "../pages/Onboarding1";
 import {onboardingPage2} from "../pages/Onboarding2";
 import {onboardingPage3} from "../pages/Onboarding3";
 import {loginPage} from "../pages/Login";
-import { homePage } from "../pages/home.js";
-import { brandPage } from "../pages/brand.js";
-import { productDetailsPage } from "../pages/product_detail.js";
+import {homePage} from "../pages/home.js";
+import {brandPage} from "../pages/brand.js";
+import {productDetailsPage} from "../pages/product_detail.js";
 
-function changePage(page) {
-    const root = document.querySelector('#all');
-    root.innerHTML = ""; // Clear existing content
-    root.appendChild(page());
+export const apiProxy = new Proxy(
+    {}, // Target: An empty object
+    {
+        get: (target, prop) => {
+            // Dynamically resolve API endpoints
+            return (params = "") => {
+                const url = `http://localhost:5000/${prop}/${params}`;
+                return fetch(url)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`Failed to fetch from ${url}`);
+                        }
+                        return response.json();
+                    })
+                    .catch((error) => {
+                        console.error(`Error fetching ${url}:`, error);
+                        return null;
+                    });
+            };
+        },
+    }
+);
+
+function changePage(page, ...data) {
+    const root = document.querySelector("#all");
+    root.innerHTML = "";
+    root.appendChild(page(...data));
 }
 
 export const router = new Navigo("/");
-// Add new routes
+
 router
     .on("/", () => {
         if (localStorage.getItem("hasVisited") === null) {
@@ -28,29 +51,54 @@ router
         }
     })
     .on("/loading", () => {
-        changePage(loadingPage); // Loading page for a few seconds
+        changePage(loadingPage);
     })
     .on("/welcome", () => {
         console.log("Welcome route hit");
-        changePage(welcomePage); // Show the welcome page
+        changePage(welcomePage);
     })
     .on("/onboarding1", () => {
-        changePage(onboardingPage1); // Show onboarding page 1
+        changePage(onboardingPage1);
     })
     .on("/onboarding2", () => {
-        changePage(onboardingPage2); // Show onboarding page 2
+        changePage(onboardingPage2);
     })
     .on("/onboarding3", () => {
-        changePage(onboardingPage3); // Show onboarding page 3
+        changePage(onboardingPage3);
     })
     .on("/login", () => {
-        changePage(loginPage);  // Add the login page route
+        changePage(loginPage);
     })
     .on("/home", () => {
         if (localStorage.getItem("userLoggedIn") === "true") {
-            changePage(HomePage);  // Navigate to Home if logged in
+            apiProxy.Products().then((products) => {
+                changePage(homePage, products);
+            });
         } else {
-            router.navigate("/login");  // Redirect to login if not logged in
+            router.navigate("/login");
         }
-    });
-
+    })
+    .on("/brand", (params) => {
+        console.log(params.params.brand)
+        const brand = params.params.brand;
+        apiProxy.Products().then((products) => {
+            if (products) {
+                const filteredProducts = products.filter((product) => product.brand === brand);
+                console.log(filteredProducts)
+                changePage(brandPage, brand, filteredProducts);
+            }
+        });
+    })
+    .on("/product/:id", (params) => {
+        const productId = params.data.id;
+        // Use apiProxy to fetch a single product by ID
+        apiProxy.Products(productId).then((product) => {
+            if (product) {
+                changePage(productDetailsPage, product); // Pass the fetched product to productDetailsPage
+            } else {
+                console.error("Product not found");
+                router.navigate("/home");
+            }
+        });
+    })
+    .resolve();

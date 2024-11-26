@@ -1,42 +1,38 @@
 import { El } from "../utils/el";
 import { router } from "../routes/router";
+import { apiProxy } from "../routes/router.js"
+
+const userAuthProxy = new Proxy({}, {
+    get(target, prop) {
+        if (prop === "authenticate") {
+            return ({ email, password }) => {
+                return apiProxy.users() // Proxy dynamically fetches users
+                    .then((users) => {
+                        const user = users.find(
+                            (u) => u.email === email && u.password === password
+                        );
+
+                        if (user) {
+                            localStorage.setItem("userLoggedIn", "true");
+                            localStorage.setItem("userId", user.id);
+                            return { success: true, user };
+                        } else {
+                            return { success: false };
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching users:", error);
+                        return { success: false, error };
+                    });
+            };
+        }
+    },
+});
 
 export const loginPage = () => {
-    const userAuthProxy = new Proxy({}, {
-        get(target, prop) {
-            if (prop === "authenticate") {
-                return ({ email, password }) => {
-                    return fetch("http://localhost:5000/users")
-                        .then((response) => {
-                            if (!response.ok) {
-                                throw new Error("Network response was not ok");
-                            }
-                            return response.json();
-                        })
-                        .then((users) => {
-                            const user = users.find(
-                                (u) => u.email === email && u.password === password
-                            );
-
-                            if (user) {
-                                localStorage.setItem("userLoggedIn", "true");
-                                localStorage.setItem("userId", user.id);
-                                return { success: true, user };
-                            } else {
-                                return { success: false };
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("Error fetching users:", error);
-                            return { success: false, error };
-                        });
-                };
-            }
-        },
-    });
-
     return El({
         element: "div",
+        className: "login-page",
         children: [
             El({
                 element: "h2",
@@ -45,13 +41,13 @@ export const loginPage = () => {
             El({
                 element: "input",
                 type: "text",
-                placeholder: "email",
+                placeholder: "Email",
                 id: "email",
             }),
             El({
                 element: "input",
                 type: "password",
-                placeholder: "password",
+                placeholder: "Password",
                 id: "password",
             }),
             El({

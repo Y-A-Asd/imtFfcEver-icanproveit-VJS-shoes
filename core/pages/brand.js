@@ -1,4 +1,8 @@
+import { El } from "../utils/el";
+import { router } from "../routes/router";
+
 export const brandPage = (brand, products) => {
+  console.log('brandpage', brand,products)
   const brandProducts = products.filter((product) => product.brand === brand);
 
   return El({

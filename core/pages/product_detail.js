@@ -1,3 +1,6 @@
+import { El } from "../utils/el";
+import { router } from "../routes/router";
+
 export const productDetailsPage = (product) => {
   return El({
     element: "div",
