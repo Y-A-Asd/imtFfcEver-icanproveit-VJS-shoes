@@ -1,16 +1,17 @@
-import {El} from "../utils/el";
-import {router} from "../routes/router";
+import { El } from "../utils/el";
+import { cart } from "../utils/cart";
+import { wishlist } from "../utils/wishlist";
+import { router } from "../routes/router";
 
 export const productDetailsPage = (product) => {
     return El({
         element: "div",
         children: [
-            El({element: "img", src: product.images, className: "product-img w-full", alt: product.title}),
+            El({element: "img", src: product.images, alt: product.title}),
             El({element: "h1", children: [product.title]}),
             El({element: "p", children: [product.description || "null"]}),
             El({
                 element: "div",
-                className: "sizes",
                 children: [
                     El({element: "h3", children: ["sizes:"]}),
                     ...product.size.map((size) => El({element: "span", children: [size]})),
@@ -18,35 +19,39 @@ export const productDetailsPage = (product) => {
             }),
             El({
                 element: "div",
-                className: "colors",
                 children: [
-                    El({element: "h3", children: ["Colors:"]}),
+                    El({element: "h3", children: ["colors:"]}),
                     ...product.color.map((color) => El({element: "span", children: [color]})),
                 ],
             }),
             El({
                 element: "button",
-                children: ["Add to Cart"],
+                children: ["add to cart"],
                 eventListener: [
                     {
                         event: "click",
-                        callback: () => alert(`${product.title} added to cart!`),
+                        callback: () => {
+                            cart.add(product);
+                            alert(`${product.title} added to cart!`);
+                        },
                     },
                 ],
             }),
             El({
                 element: "button",
-                children: ["Like"],
+                children: ["Add to wishlist"],
                 eventListener: [
                     {
                         event: "click",
-                        callback: () => alert(`${product.title} added to wishlist!`),
+                        callback: () => {
+                            wishlist.add(product);
+                            alert(`${product.title} added to wishlist`);
+                        },
                     },
                 ],
             }),
             El({
                 element: "footer",
-                className: "navigation-menu",
                 children: [
                     El({
                         element: "button",
