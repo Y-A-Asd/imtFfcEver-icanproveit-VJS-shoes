@@ -1,8 +1,59 @@
 import { El } from "../utils/el";
 import { router } from "../routes/router";
 
-export const homePage = (products) => {
-    const brands = [...new Set(products.map((product) => product.brand))]; // Extract unique brands
+export const homePage = (initialProducts) => {
+    const brands = [...new Set(initialProducts.map((product) => product.brand))];
+
+    const productListContainer = El({
+        element: "section",
+        className: "product-list",
+        children: [],
+    });
+
+    function updateProductList(products) {
+        productListContainer.innerHTML = "";
+        if (products.length > 0) {
+            products.forEach((product) => {
+                const productCard = El({
+                    element: "div",
+                    className: "product-card",
+                    children: [
+                        El({ element: "img", src: product.images, alt: product.title }),
+                        El({ element: "h3", children: [product.title] }),
+                        El({ element: "p", children: [`$${product.price}`] }),
+                    ],
+                    eventListener: [
+                        {
+                            event: "click",
+                            callback: () => router.navigate(`/product/${product.id}`),
+                        },
+                    ],
+                });
+                productListContainer.appendChild(productCard);
+            });
+        } else {
+            productListContainer.appendChild(
+                El({
+                    element: "p",
+                    children: ["محصولی یافت نشد"],
+                })
+            );
+        }
+    }
+
+    updateProductList(initialProducts);
+
+    function handleSearch(event) {
+        const query = event.target.value.trim().toLowerCase();
+        if (query.length > 0) {
+            const filteredProducts = initialProducts.filter((product) =>
+                product.title.toLowerCase().includes(query)
+            );
+            updateProductList(filteredProducts);
+        } else {
+            updateProductList(initialProducts);
+        }
+    }
 
     return El({
         element: "div",
@@ -15,6 +66,12 @@ export const homePage = (products) => {
                         element: "input",
                         placeholder: "Search products...",
                         id: "search-bar",
+                        eventListener: [
+                            {
+                                event: "input",
+                                callback: handleSearch,
+                            },
+                        ],
                     }),
                 ],
             }),
@@ -34,37 +91,7 @@ export const homePage = (products) => {
                     })
                 ),
             }),
-            El({
-                element: "section",
-                className: "product-list",
-                children: products.map((product) =>
-                    El({
-                        element: "div",
-                        className: "product-card",
-                        children: [
-                            El({
-                                element: "img",
-                                src: product.images,
-                                alt: product.title,
-                            }),
-                            El({
-                                element: "h3",
-                                children: [product.title],
-                            }),
-                            El({
-                                element: "p",
-                                children: [`$${product.price}`],
-                            }),
-                        ],
-                        eventListener: [
-                            {
-                                event: "click",
-                                callback: () => router.navigate(`/product/${product.id}`),
-                            },
-                        ],
-                    })
-                ),
-            }),
+            productListContainer,
             El({
                 element: "footer",
                 className: "navigation-menu",

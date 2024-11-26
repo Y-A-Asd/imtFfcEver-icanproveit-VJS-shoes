@@ -18,7 +18,7 @@ export const brandPage = (brand, products) => {
           El({
             element: "div",
             children: [
-              El({ element: "img", src: product.images, className: "product-img", alt: product.title }),
+              El({ element: "img", src: product.images, alt: product.title }),
               El({ element: "h3", children: [product.title] }),
               El({ element: "p", children: [`$${product.price}`] }),
             ],
@@ -33,7 +33,6 @@ export const brandPage = (brand, products) => {
       }),
         El({
                 element: "footer",
-                className: "navigation-menu",
                 children: [
                     El({
                         element: "button",
