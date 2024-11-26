@@ -2,8 +2,13 @@ import { El } from "../utils/el";
 import { cart } from "../utils/cart";
 
 export const cartPage = () => {
-    const cartItems = cart;
-    console.log(cart)
+    const cartItems = cart.getAll;
+
+    const updateQuantityInDOM = (item, newQuantity) => {
+        const itemElement = document.querySelector(`#cart-item-${item.id}`);
+        const quantityElement = itemElement.querySelector("#quantity");
+        quantityElement.textContent = newQuantity;
+    };
 
     return El({
         element: "div",
@@ -14,9 +19,11 @@ export const cartPage = () => {
                 children: cartItems.map((item) =>
                     El({
                         element: "div",
+                        id: `cart-item-${item.id}`,
                         children: [
-                            El({element: "img", src: item.image}),
+                            El({element: "img", src: item.images}),
                             El({element: "p", children: [item.title]}),
+                            El({element: "p", id: "quantity", children: [item.quantity]}),
                             El({
                                 element: "button",
                                 children: ["Remove"],
@@ -26,6 +33,8 @@ export const cartPage = () => {
                                         callback: () => {
                                             cart.remove(item);
                                             alert(`${item.title} removed from cart!`);
+                                            const itemElement = document.querySelector(`#cart-item-${item.id}`);
+                                            itemElement.remove();
                                         },
                                     },
                                 ],
@@ -37,8 +46,9 @@ export const cartPage = () => {
                                     {
                                         event: "click",
                                         callback: () => {
-                                            const quantity = Math.max(1, item.quantity - 1);
-                                            cart.updateQuantity(item, quantity);
+                                            const newQuantity = Math.max(1, item.quantity - 1);
+                                            cart.updateQuantity(item, newQuantity);
+                                            updateQuantityInDOM(item, newQuantity);
                                         },
                                     },
                                 ],
@@ -50,8 +60,9 @@ export const cartPage = () => {
                                     {
                                         event: "click",
                                         callback: () => {
-                                            const quantity = item.quantity + 1;
-                                            cart.updateQuantity(item, quantity);
+                                            const newQuantity = item.quantity + 1;
+                                            cart.updateQuantity(item, newQuantity);
+                                            updateQuantityInDOM(item, newQuantity);
                                         },
                                     },
                                 ],
@@ -67,7 +78,7 @@ export const cartPage = () => {
                     {
                         event: "click",
                         callback: () => {
-                            alert("checkout");
+                            alert("checkout...");
                         },
                     },
                 ],

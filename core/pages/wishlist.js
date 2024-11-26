@@ -1,8 +1,9 @@
 import { El } from "../utils/el";
 import { wishlist } from "../utils/wishlist";
+import {router} from "../routes/router.js";
 
 export const wishlistPage = () => {
-    const wishlistItems = wishlist;
+    const wishlistItems = wishlist.getAll;
 
     return El({
         element: "div",
@@ -14,7 +15,7 @@ export const wishlistPage = () => {
                     El({
                         element: "div",
                         children: [
-                            El({element: "img", src: item.image}),
+                            El({element: "img", src: item.images}),
                             El({element: "p", children: [item.title]}),
                             El({
                                 element: "button",
@@ -25,6 +26,7 @@ export const wishlistPage = () => {
                                         callback: () => {
                                             wishlist.remove(item);
                                             alert(`${item.title} removed`);
+                                            router.navigate('/wishlist')
                                         },
                                     },
                                 ],

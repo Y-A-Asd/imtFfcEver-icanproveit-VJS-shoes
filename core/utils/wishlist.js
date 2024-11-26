@@ -1,7 +1,9 @@
 export const wishlist = new Proxy([], {
     get: (target, prop) => {
         if (prop === 'add') {
+
             return (product) => {
+                //every(), some()
                 if (!target.some(item => item.id === product.id)) {
                     target.push(product);
                     saveWishlistToServer(target);
@@ -17,6 +19,9 @@ export const wishlist = new Proxy([], {
                 }
             };
         }
+        if (prop === 'getAll') {
+            return target;
+        }
         return target[prop];
     }
 });
@@ -24,3 +29,14 @@ export const wishlist = new Proxy([], {
 function saveWishlistToServer(wishlistData) {
     localStorage.setItem('wishlist', JSON.stringify(wishlistData));
 }
+
+
+function initializeWishlist() {
+    const savedWishlist = localStorage.getItem('wishlist');
+    if (savedWishlist) {
+        const parsedWishlist = JSON.parse(savedWishlist);
+        parsedWishlist.forEach(item => wishlist.push(item));
+    }
+}
+
+initializeWishlist();
