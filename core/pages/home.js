@@ -6,7 +6,6 @@ export const homePage = (initialProducts) => {
 
     const productListContainer = El({
         element: "section",
-        className: "product-list",
         children: [],
     });
 
@@ -16,7 +15,6 @@ export const homePage = (initialProducts) => {
             products.forEach((product) => {
                 const productCard = El({
                     element: "div",
-                    className: "product-card",
                     children: [
                         El({ element: "img", src: product.images, alt: product.title }),
                         El({ element: "h3", children: [product.title] }),
@@ -77,7 +75,6 @@ export const homePage = (initialProducts) => {
             }),
             El({
                 element: "section",
-                className: "brand-filters",
                 children: brands.map((brand) =>
                     El({
                         element: "button",
@@ -94,7 +91,6 @@ export const homePage = (initialProducts) => {
             productListContainer,
             El({
                 element: "footer",
-                className: "navigation-menu",
                 children: [
                     El({
                         element: "button",
