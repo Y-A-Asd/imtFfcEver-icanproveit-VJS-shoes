@@ -13,7 +13,7 @@ export const cartPage = () => {
     return El({
         element: "div",
         children: [
-            El({element: "h2", children: ["cart"]}),
+            El({ element: "h2", children: ["Cart"] }),
             El({
                 element: "div",
                 children: cartItems.map((item) =>
@@ -21,16 +21,16 @@ export const cartPage = () => {
                         element: "div",
                         id: `cart-item-${item.id}`,
                         children: [
-                            El({element: "img", src: item.images}),
-                            El({element: "p", children: [item.title]}),
-                            El({element: "p", id: "quantity", children: [item.quantity]}),
+                            El({ element: "img", src: item.images }),
+                            El({ element: "p", children: [item.title] }),
+                            El({ element: "p", id: "quantity", children: [item.quantity] }),
                             El({
                                 element: "button",
                                 children: ["Remove"],
                                 eventListener: [
                                     {
                                         event: "click",
-                                        callback: () => {
+                                        callback: async () => {
                                             cart.remove(item);
                                             alert(`${item.title} removed from cart!`);
                                             const itemElement = document.querySelector(`#cart-item-${item.id}`);
@@ -45,7 +45,7 @@ export const cartPage = () => {
                                 eventListener: [
                                     {
                                         event: "click",
-                                        callback: () => {
+                                        callback:  () => {
                                             const newQuantity = Math.max(1, item.quantity - 1);
                                             cart.updateQuantity(item, newQuantity);
                                             updateQuantityInDOM(item, newQuantity);
@@ -59,7 +59,7 @@ export const cartPage = () => {
                                 eventListener: [
                                     {
                                         event: "click",
-                                        callback: () => {
+                                        callback:  () => {
                                             const newQuantity = item.quantity + 1;
                                             cart.updateQuantity(item, newQuantity);
                                             updateQuantityInDOM(item, newQuantity);
@@ -78,7 +78,7 @@ export const cartPage = () => {
                     {
                         event: "click",
                         callback: () => {
-                            alert("checkout...");
+                            alert("Proceeding to checkout...");
                         },
                     },
                 ],

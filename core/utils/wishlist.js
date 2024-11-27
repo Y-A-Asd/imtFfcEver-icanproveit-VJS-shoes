@@ -1,42 +1,54 @@
 export const wishlist = new Proxy([], {
     get: (target, prop) => {
-        if (prop === 'add') {
+        const userId = localStorage.getItem("userId");
+        if (!userId) throw new Error("User is not logged in.");
 
-            return (product) => {
-                //every(), some()
-                if (!target.some(item => item.id === product.id)) {
+        const updateWishlistOnServer = (wishlistData) => {
+            return fetch(`http://localhost:5000/users/${userId}`, {
+                method: "PATCH",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({wishlist: wishlistData}),
+            }).catch((error) => console.error("Error updating wishlist on server:", error));
+        };
+
+        if (prop === "add") {
+            return async (product) => {
+                if (!target.some((item) => item.id === product.id)) {
                     target.push(product);
-                    saveWishlistToServer(target);
+                    await updateWishlistOnServer(target);
                 }
             };
         }
-        if (prop === 'remove') {
-            return (product) => {
-                const index = target.findIndex(item => item.id === product.id);
+        if (prop === "remove") {
+            return async (product) => {
+                const index = target.findIndex((item) => item.id === product.id);
                 if (index !== -1) {
                     target.splice(index, 1);
-                    saveWishlistToServer(target);
+                    await updateWishlistOnServer(target);
                 }
             };
         }
-        if (prop === 'getAll') {
+        if (prop === "getAll") {
+            console.log(target)
             return target;
         }
         return target[prop];
-    }
+    },
 });
 
-function saveWishlistToServer(wishlistData) {
-    localStorage.setItem('wishlist', JSON.stringify(wishlistData));
-}
+export const initializeWishlist = (() => {
+    let initialized = false; // Ensures initialization runs only once
+    const userId = localStorage.getItem("userId");
+    if (!userId) throw new Error("User is not logged in.");
 
+    const initPromise = fetch(`http://localhost:5000/users/${userId}`)
+        .then((response) => response.json())
+        .then((userData) => {
+            userData.wishlist.forEach((item) => wishlist.push(item));
+            initialized = true;
+        })
+        .catch((error) => console.error("Error fetching user wishlist:", error));
 
-function initializeWishlist() {
-    const savedWishlist = localStorage.getItem('wishlist');
-    if (savedWishlist) {
-        const parsedWishlist = JSON.parse(savedWishlist);
-        parsedWishlist.forEach(item => wishlist.push(item));
-    }
-}
+    return () => (initialized ? Promise.resolve() : initPromise);
+})();
 
-initializeWishlist();

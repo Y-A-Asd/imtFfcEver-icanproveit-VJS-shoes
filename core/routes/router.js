@@ -11,6 +11,8 @@ import { brandPage } from "../pages/brand.js";
 import { productDetailsPage } from "../pages/product_detail.js";
 import { cartPage } from "../pages/cart.js";
 import { wishlistPage } from "../pages/wishlist";
+import {initializeWishlist} from "../utils/wishlist.js";
+import {initializeCart} from "../utils/cart.js";
 
 export const apiProxy = new Proxy(
     {},
@@ -115,14 +117,15 @@ router
             });
         });
     })
-    // Add Cart Route
-    .on("/cart", () => {
-        checkLoginAndNavigate("/cart", () => {
+    .on("/cart", async () => {
+        await checkLoginAndNavigate("/cart", async () => {
+            await initializeCart()
             changePage(cartPage);
         });
     })
-    .on("/wishlist", () => {
-        checkLoginAndNavigate("/wishlist", () => {
+    .on("/wishlist", async() => {
+        await checkLoginAndNavigate("/wishlist", async () => {
+            await initializeWishlist();
             changePage(wishlistPage);
         });
     })
