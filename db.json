@@ -7,27 +7,7 @@
       "password": "Your Password",
       "cart": [],
       "orders": [],
-      "wishlist": [
-        {
-          "id": "1",
-          "title": "adidas",
-          "price": 245,
-          "order": 0,
-          "size": [
-            42,
-            41,
-            40
-          ],
-          "color": [
-            "rose",
-            "emerald",
-            "yellow",
-            "gray"
-          ],
-          "brand": "adidas",
-          "images": "http://localhost:5000/products/adidas/1.webp"
-        }
-      ]
+      "wishlist": []
     }
   ],
   "Products": [

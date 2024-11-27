@@ -37,7 +37,7 @@ export const wishlist = new Proxy([], {
 });
 
 export const initializeWishlist = (() => {
-    let initialized = false; // Ensures initialization runs only once
+    let initialized = false;
     const userId = localStorage.getItem("userId");
     if (!userId) throw new Error("User is not logged in.");
 
@@ -50,5 +50,5 @@ export const initializeWishlist = (() => {
         .catch((error) => console.error("Error fetching user wishlist:", error));
 
     return () => (initialized ? Promise.resolve() : initPromise);
-})();
+})();//NICE :-)
 

@@ -6,19 +6,22 @@ export const cart = new Proxy([], {
         const updateCartOnServer = (cartData) => {
             return fetch(`http://localhost:5000/users/${userId}`, {
                 method: "PATCH",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ cart: cartData }),
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({cart: cartData}),
             }).catch((error) => console.error("Error updating cart on server:", error));
         };
 
         if (prop === "add") {
-            return async (product) => {
-                const existingProduct = target.find((item) => item.id === product.id);
+            return async (product, size, color) => {
+                // Find item with same id, size, and color
+                const existingProduct = target.find(
+                    (item) => item.id === product.id && item.size === size && item.color === color
+                );
 
                 if (existingProduct) {
                     existingProduct.quantity += 1;
                 } else {
-                    target.push({ ...product, quantity: 1 });
+                    target.push({...product, size, color, quantity: 1});
                 }
 
                 await updateCartOnServer(target);
@@ -26,7 +29,12 @@ export const cart = new Proxy([], {
         }
         if (prop === "remove") {
             return async (product) => {
-                const index = target.findIndex((item) => item.id === product.id);
+                const index = target.findIndex(
+                    (item) =>
+                        item.id === product.id &&
+                        item.size === product.size &&
+                        item.color === product.color
+                );
                 if (index !== -1) {
                     target.splice(index, 1);
                     await updateCartOnServer(target);
@@ -35,7 +43,12 @@ export const cart = new Proxy([], {
         }
         if (prop === "updateQuantity") {
             return async (product, quantity) => {
-                const index = target.findIndex((item) => item.id === product.id);
+                const index = target.findIndex(
+                    (item) =>
+                        item.id === product.id &&
+                        item.size === product.size &&
+                        item.color === product.color
+                );
                 if (index !== -1) {
                     target[index].quantity = quantity;
                     await updateCartOnServer(target);
@@ -48,6 +61,7 @@ export const cart = new Proxy([], {
         return target[prop];
     },
 });
+
 
 export const initializeCart = (() => {
     let initialized = false;
@@ -63,4 +77,4 @@ export const initializeCart = (() => {
         .catch((error) => console.error("Error fetching user cart:", error));
 
     return () => (initialized ? Promise.resolve() : initPromise);
-})();
+})(); //NICE :-)
