@@ -1,5 +1,6 @@
 import { El } from "../utils/el";
 import { cart } from "../utils/cart";
+import {router} from "../routes/router.js";
 
 export const cartPage = () => {
     const cartItems = cart.getAll;
@@ -79,6 +80,7 @@ export const cartPage = () => {
                         event: "click",
                         callback: () => {
                             alert("Proceeding to checkout...");
+                            router.navigate("/checkout");
                         },
                     },
                 ],

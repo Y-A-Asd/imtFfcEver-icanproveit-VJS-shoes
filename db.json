@@ -5,9 +5,25 @@
       "name": "ali",
       "email": "Your Email",
       "password": "Your Password",
-      "cart": [],
+      "cart": [
+        {
+          "id": "1",
+          "title": "adidas",
+          "price": 245,
+          "order": 0,
+          "size": 40,
+          "color": "gray",
+          "brand": "adidas",
+          "images": "http://localhost:5000/products/adidas/1.webp",
+          "quantity": 4
+        }
+      ],
       "orders": [],
-      "wishlist": []
+      "wishlist": [],
+      "addresses": [
+        "345",
+        "24134"
+      ]
     }
   ],
   "Products": [

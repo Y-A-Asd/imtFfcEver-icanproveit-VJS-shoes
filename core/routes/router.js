@@ -1,40 +1,23 @@
 import Navigo from "navigo";
 
-import { loadingPage } from "../pages/Loading";
-import { welcomePage } from "../pages/Welcome";
-import { onboardingPage1 } from "../pages/Onboarding1";
-import { onboardingPage2 } from "../pages/Onboarding2";
-import { onboardingPage3 } from "../pages/Onboarding3";
-import { loginPage } from "../pages/Login";
-import { homePage } from "../pages/home.js";
-import { brandPage } from "../pages/brand.js";
-import { productDetailsPage } from "../pages/product_detail.js";
-import { cartPage } from "../pages/cart.js";
-import { wishlistPage } from "../pages/wishlist";
+import {loadingPage} from "../pages/Loading";
+import {welcomePage} from "../pages/Welcome";
+import {onboardingPage1} from "../pages/Onboarding1";
+import {onboardingPage2} from "../pages/Onboarding2";
+import {onboardingPage3} from "../pages/Onboarding3";
+import {loginPage} from "../pages/Login";
+import {homePage} from "../pages/home.js";
+import {brandPage} from "../pages/brand.js";
+import {productDetailsPage} from "../pages/product_detail.js";
+import {cartPage} from "../pages/cart.js";
+import {wishlistPage} from "../pages/wishlist";
 import {initializeWishlist} from "../utils/wishlist.js";
 import {initializeCart} from "../utils/cart.js";
-
-export const apiProxy = new Proxy(
-    {},
-    {
-        get: (target, prop) => {
-            return (params = "") => {
-                const url = `http://localhost:5000/${prop}/${params}`;
-                return fetch(url)
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error(`Failed to fetch from ${url}`);
-                        }
-                        return response.json();
-                    })
-                    .catch((error) => {
-                        console.error(`Error fetching ${url}:`, error);
-                        return null;
-                    });
-            };
-        },
-    }
-);
+import {checkoutPage} from "../pages/checkout.js";
+import {addressPage} from "../pages/address.js";
+import {paymentPage} from "../pages/payment.js";
+import {apiProxy} from "../utils/api.js";
+import {initializeAddresses} from "../utils/address.js";
 
 function changePage(page, ...data) {
     const root = document.querySelector("#all");
@@ -58,7 +41,7 @@ router
             localStorage.setItem("hasVisited", "true");
             router.navigate("/loading");
         } else {
-            router.navigate("/welcome");
+            router.navigate("/login");
         }
     })
     .on("/loading", () => {
@@ -86,7 +69,7 @@ router
     })
     .on("/home", () => {
         checkLoginAndNavigate("/home", () => {
-            apiProxy.Products().then((products) => {
+            apiProxy.Products().get().then((products) => {
                 changePage(homePage, products);
             });
         });
@@ -95,7 +78,7 @@ router
         checkLoginAndNavigate("/brand", () => {
             console.log(params.params.brand);
             const brand = params.params.brand;
-            apiProxy.Products().then((products) => {
+            apiProxy.Products().get().then((products) => {
                 if (products) {
                     const filteredProducts = products.filter((product) => product.brand === brand);
                     console.log(filteredProducts);
@@ -107,7 +90,7 @@ router
     .on("/product/:id", (params) => {
         checkLoginAndNavigate("/product/:id", () => {
             const productId = params.data.id;
-            apiProxy.Products(productId).then((product) => {
+            apiProxy.Products(productId).get().then((product) => {
                 if (product) {
                     changePage(productDetailsPage, product);
                 } else {
@@ -123,7 +106,22 @@ router
             changePage(cartPage);
         });
     })
-    .on("/wishlist", async() => {
+    .on("/checkout", async () => {
+        await checkLoginAndNavigate("/checkout", async () => {
+            await initializeCart()
+            await initializeAddresses()
+            changePage(checkoutPage);
+        });
+    })
+
+    .on("/address", async () => {
+        await checkLoginAndNavigate("/address", async () => {
+            await initializeCart()
+            await initializeAddresses()
+            changePage(addressPage);
+        });
+    })
+    .on("/wishlist", async () => {
         await checkLoginAndNavigate("/wishlist", async () => {
             await initializeWishlist();
             changePage(wishlistPage);

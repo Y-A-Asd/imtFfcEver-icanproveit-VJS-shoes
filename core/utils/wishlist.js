@@ -1,14 +1,12 @@
+import {apiProxy} from "./api.js";
+
 export const wishlist = new Proxy([], {
     get: (target, prop) => {
         const userId = localStorage.getItem("userId");
         if (!userId) throw new Error("User is not logged in.");
 
-        const updateWishlistOnServer = (wishlistData) => {
-            return fetch(`http://localhost:5000/users/${userId}`, {
-                method: "PATCH",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({wishlist: wishlistData}),
-            }).catch((error) => console.error("Error updating wishlist on server:", error));
+        const updateWishlistOnServer = (userId, wishlistData) => {
+            return apiProxy.users(userId).patch({wishlist: wishlistData});
         };
 
         if (prop === "add") {
@@ -41,8 +39,7 @@ export const initializeWishlist = (() => {
     const userId = localStorage.getItem("userId");
     if (!userId) throw new Error("User is not logged in.");
 
-    const initPromise = fetch(`http://localhost:5000/users/${userId}`)
-        .then((response) => response.json())
+    const initPromise = apiProxy.users(userId).get()
         .then((userData) => {
             userData.wishlist.forEach((item) => wishlist.push(item));
             initialized = true;

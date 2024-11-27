@@ -1,12 +1,12 @@
 import { El } from "../utils/el";
 import { router } from "../routes/router";
-import { apiProxy } from "../routes/router.js"
+import { apiProxy } from "../utils/api.js"
 
 const userAuthProxy = new Proxy({}, {
     get(target, prop) {
         if (prop === "authenticate") {
             return ({ email, password }) => {
-                return apiProxy.users() // Proxy dynamically fetches users
+                return apiProxy.users().get()
                     .then((users) => {
                         const user = users.find(
                             (u) => u.email === email && u.password === password
