@@ -5,7 +5,7 @@ export const wishlist = new Proxy([], {
         const userId = localStorage.getItem("userId");
         if (!userId) throw new Error("User is not logged in.");
 
-        const updateWishlistOnServer = (userId, wishlistData) => {
+        const updateWishlistOnServer = (wishlistData) => {
             return apiProxy.users(userId).patch({wishlist: wishlistData});
         };
 
@@ -47,5 +47,6 @@ export const initializeWishlist = (() => {
         .catch((error) => console.error("Error fetching user wishlist:", error));
 
     return () => (initialized ? Promise.resolve() : initPromise);
-})();//NICE :-)
+})();//IIFE Immediately Invoked Function Expression ;)
+//NICE :-)
 

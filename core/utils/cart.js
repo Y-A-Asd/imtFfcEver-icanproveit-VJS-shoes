@@ -75,4 +75,5 @@ export const initializeCart = (() => {
 
 
     return () => (initialized ? Promise.resolve() : initPromise);
-})(); //NICE :-)
+})();//IIFE Immediately Invoked Function Expression ;)
+//NICE :-)

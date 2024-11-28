@@ -7,47 +7,103 @@ import {initializeAddresses} from "../utils/address.js"; // Import addresses pro
 export const addressPage = () => {
     const userId = localStorage.getItem("userId");
 
+    const updateAddressList = () => {
+        console.log('updated')
+        const addressListContainer = document.querySelector("#address-list");
+
+        addressListContainer.innerHTML = "";
+
+        const updatedAddressList = addresses.getAll.map((address, index) =>
+            El({
+                element: "li",
+                children: [
+                    El({element: "p", children: [`${address}`]}),
+                    El({
+                        element: "button",
+                        children: ["Edit"],
+                        eventListener: [
+                            {
+                                event: "click",
+                                callback: async () => {
+                                    const newAddress = prompt("Edit address:", address);
+                                    if (newAddress) {
+                                        await editAddress(index, newAddress);
+                                    }
+                                },
+                            },
+                        ],
+                    }),
+                    El({
+                        element: "button",
+                        children: ["Delete"],
+                        eventListener: [
+                            {
+                                event: "click",
+                                callback: async () => {
+                                    if (confirm("Are you sure you want to delete this address?")) {
+                                        await deleteAddress(index);
+                                    }
+                                },
+                            },
+                        ],
+                    }),
+                ],
+            })
+        );
+
+        if (updatedAddressList.length > 0) {
+            updatedAddressList.forEach((item) => addressListContainer.appendChild(item));
+        } else {
+            addressListContainer.appendChild(
+                El({element: "p", children: ["No addresses found."]})
+            );
+        }
+    };
 
     const addAddress = async (newAddress) => {
         const currentAddresses = addresses.getAll
 
-        const updatedAddresses = [...currentAddresses, newAddress];
+        // const updatedAddresses = [...currentAddresses, newAddress];
+        addresses.add(newAddress)
+        // const response = await apiProxy.users(userId).patch({addresses: updatedAddresses})
 
-        const response = await apiProxy.users(userId).patch({addresses: updatedAddresses})
-
-        if (response) {
-            alert("Address added successfully!")
-            router.navigate('/address')
-        }
+        // if (response) {
+        //     alert("Address added successfully!")
+        //     await initializeAddresses()
+        updateAddressList()
+        // }
     };
 
     const deleteAddress = async (addressIndex) => {
         const currentAddresses = addresses.getAll;
 
-        const updatedAddresses = currentAddresses.filter((_, index) => index !== addressIndex);
+        // const updatedAddresses = currentAddresses.filter((_, index) => index !== addressIndex);
+        addresses.remove(addressIndex)
+        // const response = await apiProxy.users(userId).patch({addresses: updatedAddresses});
 
-        const response = await apiProxy.users(userId).patch({addresses: updatedAddresses});
-
-        if (response) {
-            alert("Address deleted successfully!");
-            router.navigate('/address')
-
-        }
+        // if (response) {
+        //     alert("Address deleted successfully!");
+        //     await initializeAddresses()
+        updateAddressList()
+        //
+        // }
     };
 
     const editAddress = async (addressIndex, newAddress) => {
         const currentAddresses = addresses.getAll;
-
-        const updatedAddresses = currentAddresses.map((address, index) =>
-            index === addressIndex ? {...address, newAddress} : address
-        );
-
-        const response = await apiProxy.users(userId).patch({addresses: updatedAddresses});
-
-        if (response) {
-            alert("Address updated successfully!");
-            router.navigate('/address')
-        }
+        addresses.remove(addressIndex)
+        addresses.add(newAddress)
+        // const updatedAddresses = currentAddresses.map((address, index) =>
+        //     index === addressIndex ? {...address, newAddress} : address
+        // );
+        //
+        // const response = await apiProxy.users(userId).patch({addresses: updatedAddresses});
+        //
+        // if (response) {
+        //     alert("Address updated successfully!");
+        //     await initializeAddresses()
+        updateAddressList()
+        // }
     };
 
     const addAddressForm = El({
@@ -87,7 +143,7 @@ export const addressPage = () => {
                 eventListener: [
                     {
                         event: "click",
-                        callback:  (e) => {
+                        callback: (e) => {
                             e.preventDefault();
                             router.navigate("/checkout")
                         }
@@ -96,57 +152,21 @@ export const addressPage = () => {
             }),
         ],
     });
+    const addressListContainer = El({
+        element: "ul",
+        id: "address-list",
+        children: [],
+    });
 
-    const addressList = addresses.getAll.map((address, index) =>
-        El({
-            element: "li",
-            children: [
-                El({element: "p", children: [`${address}`]}),
-                El({
-                    element: "button",
-                    children: ["Edit"],
-                    eventListener: [
-                        {
-                            event: "click",
-                            callback: async () => {
-                                const newAddress = prompt("Edit address:", address.details);
-                                if (newAddress) {
-                                    await editAddress(index, newAddress);
-                                }
-                            },
-                        },
-                    ],
-                }),
-                El({
-                    element: "button",
-                    children: ["Delete"],
-                    eventListener: [
-                        {
-                            event: "click",
-                            callback: async () => {
-                                if (confirm("Are you sure you want to delete this address?")) {
-                                    await deleteAddress(index);
-                                }
-                            },
-                        },
-                    ],
-                }),
-            ],
-        })
-    );
 
-    return El({
+    let page = El({
         element: "div",
         children: [
             El({element: "h1", children: ["Your Addresses"]}),
-            El({
-                element: "ul",
-                children: addressList.length > 0 ? addressList : [El({
-                    element: "p",
-                    children: ["No addresses found."]
-                })],
-            }),
+            addressListContainer,
             addAddressForm,
         ],
     });
+    setTimeout(() => updateAddressList(), 0);
+    return page
 };
