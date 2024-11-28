@@ -5,26 +5,52 @@
       "name": "ali",
       "email": "Your Email",
       "password": "Your Password",
-      "cart": [
+      "cart": [],
+      "orders": [
         {
-          "id": "1",
-          "title": "adidas",
-          "price": 245,
-          "order": 0,
-          "size": 40,
-          "color": "gray",
-          "brand": "adidas",
-          "images": "http://localhost:5000/products/adidas/1.webp",
-          "quantity": 5
+          "id": 1732798857490,
+          "date": "2024-11-28T13:00:57.490Z",
+          "items": [
+            {
+              "id": "1",
+              "title": "adidas",
+              "price": 245,
+              "order": 0,
+              "size": 40,
+              "color": "gray",
+              "brand": "adidas",
+              "images": "http://localhost:5000/products/adidas/1.webp",
+              "quantity": 5
+            }
+          ],
+          "address": "04",
+          "paymentMethod": "PayPal",
+          "status": "pending"
+        },
+        {
+          "id": 1732799328766,
+          "date": "2024-11-28T13:08:48.766Z",
+          "items": [
+            {
+              "id": "10",
+              "title": "asics",
+              "price": 142,
+              "order": 0,
+              "size": 42,
+              "color": "emerald",
+              "brand": "asics",
+              "images": "http://localhost:5000/products/asics/2.webp",
+              "quantity": 3
+            }
+          ],
+          "address": "04",
+          "paymentMethod": "Cash on Delivery",
+          "status": "pending"
         }
       ],
-      "orders": [],
       "wishlist": [],
       "addresses": [
-        "0987654",
-        "11",
-        "ooooooooooo",
-        "888888"
+        "04"
       ]
     }
   ],

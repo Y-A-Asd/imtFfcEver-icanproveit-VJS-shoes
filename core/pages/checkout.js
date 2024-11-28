@@ -1,27 +1,32 @@
-import { El } from "../utils/el";
-import { cart } from "../utils/cart";
-import { addresses } from "../utils/address.js";
-import { router } from "../routes/router";
+import {El} from "../utils/el";
+import {cart} from "../utils/cart";
+import {addresses} from "../utils/address.js";
+import {router} from "../routes/router";
 
 export const checkoutPage = () => {
     const cartItems = cart.getAll;
 
     const shippingMethods = [
-        { id: "standard", name: "Standard Shipping", cost: 10, description: "Delivery in 5-7 business days." },
-        { id: "express", name: "Express Shipping", cost: 20, description: "Delivery in 2-3 business days." },
-        { id: "overnight", name: "Overnight Shipping", cost: 50, description: "Delivery by the next day." },
+        {id: "standard", name: "Standard Shipping", cost: 10, description: "Delivery in 5-7 business days."},
+        {id: "express", name: "Express Shipping", cost: 20, description: "Delivery in 2-3 business days."},
+        {id: "overnight", name: "Overnight Shipping", cost: 50, description: "Delivery by the next day."},
     ];
 
     const summary = cartItems.reduce((total, item) => {
         total.totalCost += item.price * item.quantity;
         total.totalItems += item.quantity;
         return total;
-    }, { totalCost: 0, totalItems: 0 });
+    }, {totalCost: 0, totalItems: 0});
 
     let selectedShippingMethod = shippingMethods[0];
     let shippingCost = selectedShippingMethod.cost;
 
     let selectedAddressIndex = addresses.getAll.length > 0 ? 0 : null;
+
+    const saveSelectedAddress = () => {
+        const selectedAddress = addresses.getAll[selectedAddressIndex];
+        localStorage.setItem("selectedAddress", JSON.stringify(selectedAddress));
+    };
 
     const updateTotalCost = () => {
         const totalCost = summary.totalCost + shippingCost;
@@ -85,7 +90,8 @@ export const checkoutPage = () => {
                                 eventListener: [
                                     {
                                         event: "click",
-                                        callback: () => { router.navigate("/address")
+                                        callback: () => {
+                                            router.navigate("/address")
                                         },
                                     },
                                 ],
@@ -111,6 +117,7 @@ export const checkoutPage = () => {
                                                         callback: () => {
                                                             selectedAddressIndex = index;
                                                             updateAddressDisplay();
+                                                            saveSelectedAddress();
                                                             document.getElementById("address-list").style.display =
                                                                 "none";
                                                         },
@@ -201,7 +208,7 @@ export const checkoutPage = () => {
                                                 alert("select an address before");
                                                 return;
                                             }
-                                            router.navigate("payment");
+                                            router.navigate("/payment");
                                         },
                                     },
                                 ],

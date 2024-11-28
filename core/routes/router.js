@@ -18,6 +18,8 @@ import {addressPage} from "../pages/address.js";
 import {paymentPage} from "../pages/payment.js";
 import {apiProxy} from "../utils/api.js";
 import {initializeAddresses} from "../utils/address.js";
+import {initializeOrders} from "../utils/orders.js";
+import {ordersPage} from "../pages/orders.js";
 
 function changePage(page, ...data) {
     const root = document.querySelector("#all");
@@ -125,6 +127,20 @@ router
         await checkLoginAndNavigate("/wishlist", async () => {
             await initializeWishlist();
             changePage(wishlistPage);
+        });
+    })
+    .on("/payment", async () => {
+        await checkLoginAndNavigate("/payment", async () => {
+            await initializeCart()
+            await initializeAddresses()
+            await initializeOrders()
+            changePage(paymentPage);
+        });
+    })
+    .on("/orders", async () => {
+        await checkLoginAndNavigate("/orders", async () => {
+            await initializeOrders()
+            changePage(ordersPage);
         });
     })
     .resolve();
