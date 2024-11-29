@@ -6,7 +6,6 @@ import { orders } from "../utils/orders.js";
 export const paymentPage = () => {
     let selectedPaymentMethod = null;
 
-    // Retrieve the selected address from localStorage
     const selectedAddress = JSON.parse(localStorage.getItem("selectedAddress"));
 
     if (!selectedAddress) {
@@ -17,13 +16,13 @@ export const paymentPage = () => {
 
     const createOrder = async () => {
         if (!selectedPaymentMethod) {
-            alert("select payment");
+            alert("Please select a payment method.");
             return;
         }
 
         const userCart = cart.getAll;
         if (userCart.length === 0) {
-            alert("cart empty");
+            alert("Your cart is empty.");
             return;
         }
 
@@ -46,14 +45,23 @@ export const paymentPage = () => {
 
     return El({
         element: "div",
+        className: "min-h-screen bg-green-50 py-6 px-4 sm:px-6 lg:px-8",
         children: [
-            El({ element: "h1", children: ["Payment Methods"] }),
+            El({
+                element: "h1",
+                children: ["Payment Methods"],
+                className: "text-3xl font-semibold text-green-700 mb-8 text-center",
+            }),
+
             El({
                 element: "div",
+                className: "space-y-4 flex flex-col items-center",
                 children: [
                     El({
                         element: "button",
                         children: ["Zarinpal"],
+                        className:
+                            "w-full py-2 px-6 bg-yellow-600 text-sm  text-white font-semibold rounded-lg hover:bg-yellow-700 transition duration-300",
                         eventListener: [
                             {
                                 event: "click",
@@ -67,6 +75,8 @@ export const paymentPage = () => {
                     El({
                         element: "button",
                         children: ["PayPal"],
+                        className:
+                            "w-full py-2 px-6 bg-blue-600  text-sm text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-300",
                         eventListener: [
                             {
                                 event: "click",
@@ -80,6 +90,8 @@ export const paymentPage = () => {
                     El({
                         element: "button",
                         children: ["Cash on Delivery"],
+                        className:
+                            "w-full py-2 px-6 text-sm bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition duration-300",
                         eventListener: [
                             {
                                 event: "click",
@@ -92,16 +104,26 @@ export const paymentPage = () => {
                     }),
                 ],
             }),
+
             El({
-                element: "button",
-                children: ["Confirm Payment"],
-                eventListener: [
-                    {
-                        event: "click",
-                        callback: createOrder,
-                    },
+                element: "div",
+                className: "mt-6 flex justify-center",
+                children: [
+                    El({
+                        element: "button",
+                        children: ["Confirm Payment"],
+                        className:
+                            "py-2 px-8 bg-green-600 text-white text-md font-semibold rounded-lg hover:bg-green-700 transition duration-300",
+                        eventListener: [
+                            {
+                                event: "click",
+                                callback: createOrder,
+                            },
+                        ],
+                    }),
                 ],
             }),
         ],
     });
 };
+

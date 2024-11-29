@@ -5,19 +5,7 @@
       "name": "ali",
       "email": "Your Email",
       "password": "Your Password",
-      "cart": [
-        {
-          "id": "26",
-          "title": "newbalance",
-          "price": 45,
-          "order": 0,
-          "size": 44,
-          "color": "gray",
-          "brand": "newbalance",
-          "images": "http://localhost:5000/products/newbalance/2.webp",
-          "quantity": 1
-        }
-      ],
+      "cart": [],
       "orders": [
         {
           "id": 1732798857490,
@@ -77,6 +65,26 @@
           ],
           "address": "aklsdfjasdlf",
           "paymentMethod": "PayPal",
+          "status": "pending"
+        },
+        {
+          "id": 1732902408204,
+          "date": "2024-11-29T17:46:48.204Z",
+          "items": [
+            {
+              "id": "2",
+              "title": "adidas",
+              "price": 145,
+              "order": 0,
+              "size": 40,
+              "color": "gray",
+              "brand": "adidas",
+              "images": "http://localhost:5000/products/adidas/2.webp",
+              "quantity": 1
+            }
+          ],
+          "address": "aklsdfjasdlf",
+          "paymentMethod": "Zarinpal",
           "status": "pending"
         }
       ],

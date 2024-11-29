@@ -4,7 +4,7 @@ import {router} from "../routes/router";
 export const loadingPage = () => {
     setTimeout(() => {
       router.navigate("/welcome");
-    }, 5000);
+    }, 10000);
 
     return El({
         element: "div",
@@ -17,8 +17,8 @@ export const loadingPage = () => {
             }),
             El({
                 element: "div",
-                children: ['Yousof.A.Asd'],
-                className: "mb-4 text-gray-400 text-sm font-semibold italic tracking-wide",
+                children: ['made with ❤️ by Yousof.A.Asd'],
+                className: "mb-4 text-gray-400 text-sm font-semibold tracking-wide",
             }),
             El({
                 element: "div",

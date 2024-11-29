@@ -114,35 +114,35 @@ export const homePage = (initialProducts) => {
             productListContainer,
 
             El({
-                element: "footer",
-                className: "bg-green-600 text-white p-4 flex justify-around items-center",
-                children: [
-                    El({
-                        element: "button",
-                        className: "text-sm font-medium",
-                        children: ["Home"],
-                        eventListener: [
-                            { event: "click", callback: () => router.navigate("/home") },
-                        ],
-                    }),
-                    El({
-                        element: "button",
-                        className: "text-sm font-medium",
-                        children: ["Wishlist"],
-                        eventListener: [
-                            { event: "click", callback: () => router.navigate("/wishlist") },
-                        ],
-                    }),
-                    El({
-                        element: "button",
-                        className: "text-sm font-medium",
-                        children: ["Popular"],
-                        eventListener: [
-                            { event: "click", callback: () => router.navigate("/popular") },
-                        ],
-                    }),
-                ],
-            }),
+        element: "footer",
+        className: "bg-green-600 text-white p-4 flex justify-around items-center mt-8 rounded-tl-lg rounded-tr-lg",
+        children: [
+          El({
+            element: "button",
+            className: "text-sm font-medium py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200",
+            children: ["home"],
+            eventListener: [
+              { event: "click", callback: () => router.navigate("/home") },
+            ],
+          }),
+          El({
+            element: "button",
+            className: "text-sm font-medium py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200",
+            children: ["wishlist"],
+            eventListener: [
+              { event: "click", callback: () => router.navigate("/wishlist") },
+            ],
+          }),
+          El({
+            element: "button",
+            className: "text-sm font-medium py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200",
+            children: ["cart"],
+            eventListener: [
+              { event: "click", callback: () => router.navigate("/cart") },
+            ],
+          }),
+        ],
+      }),
         ],
     });
 };

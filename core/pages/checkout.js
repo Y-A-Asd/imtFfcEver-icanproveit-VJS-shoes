@@ -45,18 +45,22 @@ export const checkoutPage = () => {
 
     return El({
         element: "div",
+        className: "min-h-screen bg-green-50 py-6 px-4 sm:px-6 lg:px-8",
         children: [
             El({
                 element: "h1",
-                children: ["checkout"],
+                children: ["Checkout"],
+                className: "text-3xl font-semibold text-green-700 mb-6 text-center",
             }),
+
             El({
-                element: "div",
+                element: "section",
+                className: "bg-white p-6 rounded-lg shadow-lg mb-6",
                 children: [
-                    // Address Section
                     El({
                         element: "h3",
-                        children: ["sddress"],
+                        children: ["Shipping Address"],
+                        className: "text-xl font-semibold text-green-700 mb-4",
                     }),
                     El({
                         element: "div",
@@ -69,10 +73,13 @@ export const checkoutPage = () => {
                                         ? `${addresses.getAll[selectedAddressIndex]}`
                                         : "No address selected.",
                                 ],
+                                className: "text-gray-700 mb-4",
                             }),
                             El({
                                 element: "button",
-                                children: ["edit address"],
+                                children: ["Edit Address"],
+                                className:
+                                    "text-sm text-green-600 hover:text-green-800 mb-2 font-medium transition duration-300 block",
                                 eventListener: [
                                     {
                                         event: "click",
@@ -86,12 +93,14 @@ export const checkoutPage = () => {
                             }),
                             El({
                                 element: "button",
-                                children: ["add address"],
+                                children: ["Add Address"],
+                                className:
+                                    "text-sm text-green-600 hover:text-green-800 mb-2 font-medium transition duration-300",
                                 eventListener: [
                                     {
                                         event: "click",
                                         callback: () => {
-                                            router.navigate("/address")
+                                            router.navigate("/address");
                                         },
                                     },
                                 ],
@@ -107,10 +116,13 @@ export const checkoutPage = () => {
                                             El({
                                                 element: "p",
                                                 children: [`${address}`],
+                                                className: "text-gray-700 mb-2",
                                             }),
                                             El({
                                                 element: "button",
-                                                children: ["select"],
+                                                children: ["Select"],
+                                                className:
+                                                    "text-sm text-green-600 hover:text-green-800 transition duration-300",
                                                 eventListener: [
                                                     {
                                                         event: "click",
@@ -130,37 +142,54 @@ export const checkoutPage = () => {
                             }),
                         ],
                     }),
-                    // Cart Items Section
+                ],
+            }),
+
+            El({
+                element: "section",
+                className: "bg-white p-6 rounded-lg shadow-lg mb-6",
+                children: [
                     El({
                         element: "h3",
-                        children: ["items"],
+                        children: ["Items in Cart"],
+                        className: "text-xl font-semibold text-green-700 mb-4",
                     }),
                     El({
                         element: "ul",
+                        className: "space-y-4",
                         children: cartItems.map((item) =>
                             El({
                                 element: "li",
+                                className: "text-gray-700",
                                 children: [
                                     El({
                                         element: "p",
                                         children: [
-                                            `${item.title} - ${item.size} - ${item.color} - ${item.quantity} x ${item.price} = ${item.quantity * item.price}`,
+                                            `${item.title} - ${item.size} - ${item.color} - ${item.quantity} x ${item.price} = ${item.quantity * item.price} USD`,
                                         ],
                                     }),
                                 ],
                             })
                         ),
                     }),
-                    // Shipping Methods Section
+                ],
+            }),
+
+            El({
+                element: "section",
+                className: "bg-white p-6 rounded-lg shadow-lg mb-6",
+                children: [
                     El({
                         element: "h3",
-                        children: ["methods"],
+                        children: ["Shipping Methods"],
+                        className: "text-xl font-semibold text-green-700 mb-4",
                     }),
                     El({
                         element: "div",
                         children: shippingMethods.map((method) =>
                             El({
                                 element: "label",
+                                className: "block text-gray-700 mb-3",
                                 children: [
                                     El({
                                         element: "input",
@@ -168,6 +197,7 @@ export const checkoutPage = () => {
                                         name: "shipping",
                                         value: method.id,
                                         checked: method.id === selectedShippingMethod.id,
+                                        className: "mr-2",
                                         eventListener: [
                                             {
                                                 event: "change",
@@ -184,10 +214,17 @@ export const checkoutPage = () => {
                             })
                         ),
                     }),
-                    // Summary Section
+                ],
+            }),
+
+            El({
+                element: "section",
+                className: "bg-white p-6 rounded-lg shadow-lg mb-6",
+                children: [
                     El({
                         element: "h3",
-                        children: ["order "],
+                        children: ["Order Summary"],
+                        className: "text-xl font-semibold text-green-700 mb-4",
                     }),
                     El({
                         element: "div",
@@ -195,17 +232,20 @@ export const checkoutPage = () => {
                             El({
                                 element: "p",
                                 id: "total-cost",
-                                children: [`total: ${summary.totalCost + shippingCost} $ ;-)`],
+                                children: [`Total: ${summary.totalCost + shippingCost} USD`],
+                                className: "text-lg font-semibold text-gray-700 mb-4",
                             }),
                             El({
                                 element: "button",
-                                children: ["payment"],
+                                children: ["Proceed to Payment"],
+                                className:
+                                    "w-full py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition duration-300",
                                 eventListener: [
                                     {
                                         event: "click",
                                         callback: () => {
                                             if (selectedAddressIndex === null) {
-                                                alert("select an address before");
+                                                alert("Please select an address before proceeding.");
                                                 return;
                                             }
                                             router.navigate("/payment");
@@ -220,3 +260,4 @@ export const checkoutPage = () => {
         ],
     });
 };
+
