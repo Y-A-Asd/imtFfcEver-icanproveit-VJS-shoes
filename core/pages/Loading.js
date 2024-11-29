@@ -17,7 +17,7 @@ export const loadingPage = () => {
             }),
             El({
                 element: "div",
-                children: ['made with ❤️ by Yousof.A.Asd'],
+                children: ['made with ❤️ by Yousof.A.Asd '],
                 className: "mb-4 text-gray-400 text-sm font-semibold tracking-wide",
             }),
             El({
