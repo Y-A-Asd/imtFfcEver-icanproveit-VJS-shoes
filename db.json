@@ -5,7 +5,19 @@
       "name": "ali",
       "email": "Your Email",
       "password": "Your Password",
-      "cart": [],
+      "cart": [
+        {
+          "id": "26",
+          "title": "newbalance",
+          "price": 45,
+          "order": 0,
+          "size": 44,
+          "color": "gray",
+          "brand": "newbalance",
+          "images": "http://localhost:5000/products/newbalance/2.webp",
+          "quantity": 1
+        }
+      ],
       "orders": [
         {
           "id": 1732798857490,
@@ -46,11 +58,32 @@
           "address": "04",
           "paymentMethod": "Cash on Delivery",
           "status": "pending"
+        },
+        {
+          "id": 1732823062435,
+          "date": "2024-11-28T19:44:22.435Z",
+          "items": [
+            {
+              "id": "33",
+              "title": "nike",
+              "price": 110,
+              "order": 0,
+              "size": 42,
+              "color": "gray",
+              "brand": "nike",
+              "images": "http://localhost:5000/products/nike/1.webp",
+              "quantity": 3
+            }
+          ],
+          "address": "aklsdfjasdlf",
+          "paymentMethod": "PayPal",
+          "status": "pending"
         }
       ],
       "wishlist": [],
       "addresses": [
-        "04"
+        "04",
+        "aklsdfjasdlf"
       ]
     }
   ],

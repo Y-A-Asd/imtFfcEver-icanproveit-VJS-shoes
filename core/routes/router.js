@@ -2,9 +2,6 @@ import Navigo from "navigo";
 
 import {loadingPage} from "../pages/Loading";
 import {welcomePage} from "../pages/Welcome";
-import {onboardingPage1} from "../pages/Onboarding1";
-import {onboardingPage2} from "../pages/Onboarding2";
-import {onboardingPage3} from "../pages/Onboarding3";
 import {loginPage} from "../pages/Login";
 import {homePage} from "../pages/home.js";
 import {brandPage} from "../pages/brand.js";
@@ -20,6 +17,7 @@ import {apiProxy} from "../utils/api.js";
 import {initializeAddresses} from "../utils/address.js";
 import {initializeOrders} from "../utils/orders.js";
 import {ordersPage} from "../pages/orders.js";
+import {onboardingPage1, onboardingPage2, onboardingPage3} from "../pages/Onboarding1.js";
 
 function changePage(page, ...data) {
     const root = document.querySelector("#all");

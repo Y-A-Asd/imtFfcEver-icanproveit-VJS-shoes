@@ -6,6 +6,7 @@ export const homePage = (initialProducts) => {
 
     const productListContainer = El({
         element: "section",
+        className: "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 p-6",
         children: [],
     });
 
@@ -15,10 +16,24 @@ export const homePage = (initialProducts) => {
             products.forEach((product) => {
                 const productCard = El({
                     element: "div",
+                    className: "bg-white rounded-lg shadow-md overflow-hidden",
                     children: [
-                        El({ element: "img", src: product.images, alt: product.title }),
-                        El({ element: "h3", children: [product.title] }),
-                        El({ element: "p", children: [`$${product.price}`] }),
+                        El({
+                            element: "img",
+                            src: product.images,
+                            alt: product.title,
+                            className: "w-full h-48 object-cover"
+                        }),
+                        El({
+                            element: "h3",
+                            children: [product.title],
+                            className: "font-semibold text-lg p-4"
+                        }),
+                        El({
+                            element: "p",
+                            children: [`$${product.price}`],
+                            className: "text-gray-500 text-sm px-4 pb-4"
+                        }),
                     ],
                     eventListener: [
                         {
@@ -34,6 +49,7 @@ export const homePage = (initialProducts) => {
                 El({
                     element: "p",
                     children: ["محصولی یافت نشد"],
+                    className: "text-center text-gray-600 p-6",
                 })
             );
         }
@@ -55,15 +71,17 @@ export const homePage = (initialProducts) => {
 
     return El({
         element: "div",
-        className: "home-page",
+        className: "home-page bg-gray-100 min-h-screen",
         children: [
             El({
                 element: "header",
+                className: "bg-green-600 p-4",
                 children: [
                     El({
                         element: "input",
                         placeholder: "Search products...",
                         id: "search-bar",
+                        className: "w-full p-3 rounded-lg border-none focus:outline-none text-gray-700",
                         eventListener: [
                             {
                                 event: "input",
@@ -73,11 +91,15 @@ export const homePage = (initialProducts) => {
                     }),
                 ],
             }),
+
             El({
                 element: "section",
+                className: "bg-white p-4 flex overflow-x-auto space-x-4",
                 children: brands.map((brand) =>
                     El({
                         element: "button",
+                        className:
+                            "bg-green-500 text-white py-1 px-3 rounded-lg text-xs hover:bg-green-600 transition duration-200",
                         children: [brand],
                         eventListener: [
                             {
@@ -88,12 +110,16 @@ export const homePage = (initialProducts) => {
                     })
                 ),
             }),
+
             productListContainer,
+
             El({
                 element: "footer",
+                className: "bg-green-600 text-white p-4 flex justify-around items-center",
                 children: [
                     El({
                         element: "button",
+                        className: "text-sm font-medium",
                         children: ["Home"],
                         eventListener: [
                             { event: "click", callback: () => router.navigate("/home") },
@@ -101,6 +127,7 @@ export const homePage = (initialProducts) => {
                     }),
                     El({
                         element: "button",
+                        className: "text-sm font-medium",
                         children: ["Wishlist"],
                         eventListener: [
                             { event: "click", callback: () => router.navigate("/wishlist") },
@@ -108,6 +135,7 @@ export const homePage = (initialProducts) => {
                     }),
                     El({
                         element: "button",
+                        className: "text-sm font-medium",
                         children: ["Popular"],
                         eventListener: [
                             { event: "click", callback: () => router.navigate("/popular") },
