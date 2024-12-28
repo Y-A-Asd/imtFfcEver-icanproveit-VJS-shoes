@@ -73,12 +73,14 @@ Stores user data, cart, orders, wishlist, and addresses.
   "addresses": [
     "new york"
   ]
-}```
+}
+```
+
 ### Products Table
 Stores product information, including size, color, brand, and images.
 
 ```json
-{
+ {
   "id": "1",
   "title": "adidas",
   "price": 245,
