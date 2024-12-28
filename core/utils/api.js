@@ -6,7 +6,7 @@ export const apiProxy = new Proxy(
                 console.log("prop (endpoint):", prop);
                 console.log("params:", params);
 
-                return new Proxy(() => {}, {
+                return new Proxy(() => { }, {
                     get: (target, method) => {
                         console.log("method:", method);
 

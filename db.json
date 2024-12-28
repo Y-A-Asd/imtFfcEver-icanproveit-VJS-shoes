@@ -3,95 +3,34 @@
     {
       "id": "1",
       "name": "ali",
-      "email": "Your Email",
-      "password": "Your Password",
+      "email": "yosofasady2@gmail.com",
+      "password": "flatlife",
       "cart": [],
       "orders": [
         {
-          "id": 1732798857490,
-          "date": "2024-11-28T13:00:57.490Z",
-          "items": [
-            {
-              "id": "1",
-              "title": "adidas",
-              "price": 245,
-              "order": 0,
-              "size": 40,
-              "color": "gray",
-              "brand": "adidas",
-              "images": "http://localhost:5000/products/adidas/1.webp",
-              "quantity": 5
-            }
-          ],
-          "address": "04",
-          "paymentMethod": "PayPal",
-          "status": "pending"
-        },
-        {
-          "id": 1732799328766,
-          "date": "2024-11-28T13:08:48.766Z",
-          "items": [
-            {
-              "id": "10",
-              "title": "asics",
-              "price": 142,
-              "order": 0,
-              "size": 42,
-              "color": "emerald",
-              "brand": "asics",
-              "images": "http://localhost:5000/products/asics/2.webp",
-              "quantity": 3
-            }
-          ],
-          "address": "04",
-          "paymentMethod": "Cash on Delivery",
-          "status": "pending"
-        },
-        {
-          "id": 1732823062435,
-          "date": "2024-11-28T19:44:22.435Z",
-          "items": [
-            {
-              "id": "33",
-              "title": "nike",
-              "price": 110,
-              "order": 0,
-              "size": 42,
-              "color": "gray",
-              "brand": "nike",
-              "images": "http://localhost:5000/products/nike/1.webp",
-              "quantity": 3
-            }
-          ],
-          "address": "aklsdfjasdlf",
-          "paymentMethod": "PayPal",
-          "status": "pending"
-        },
-        {
-          "id": 1732902408204,
-          "date": "2024-11-29T17:46:48.204Z",
+          "id": 1735399523808,
+          "date": "2024-12-28T15:25:23.808Z",
           "items": [
             {
               "id": "2",
               "title": "adidas",
               "price": 145,
               "order": 0,
-              "size": 40,
-              "color": "gray",
+              "size": 44,
+              "color": "teal",
               "brand": "adidas",
               "images": "http://localhost:5000/products/adidas/2.webp",
               "quantity": 1
             }
           ],
-          "address": "aklsdfjasdlf",
-          "paymentMethod": "Zarinpal",
+          "address": "new york",
+          "paymentMethod": "PayPal",
           "status": "pending"
         }
       ],
       "wishlist": [],
       "addresses": [
-        "04",
-        "aklsdfjasdlf"
+        "new york"
       ]
     }
   ],
