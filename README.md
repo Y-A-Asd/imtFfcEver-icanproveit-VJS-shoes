@@ -119,9 +119,9 @@ Building the Shoe Shop project has been a rewarding journey. It has provided me 
    cd imtFfcEver-icanproveit-VJS-shoes```
 
 2. **Install dependencies:**
- ```bash
-npm i
-```
+   ```bash
+    npm i
+    ```
 
 3. **Start the development server:**
 
@@ -132,5 +132,5 @@ npm i
 
 2. **Start the JSON server :**
  ```bash
-npm run start
+    npm run start
 ```
