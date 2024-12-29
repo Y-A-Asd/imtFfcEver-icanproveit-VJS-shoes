@@ -26,11 +26,94 @@
           "address": "new york",
           "paymentMethod": "PayPal",
           "status": "pending"
+        },
+        {
+          "id": 1735405686798,
+          "date": "2024-12-28T17:08:06.798Z",
+          "items": [
+            {
+              "id": "18",
+              "title": "converse",
+              "price": 160,
+              "order": 0,
+              "size": 42,
+              "color": "teal",
+              "brand": "converse",
+              "images": "http://localhost:5000/products/converse/2.jpg",
+              "quantity": 4
+            },
+            {
+              "id": "12",
+              "title": "asics",
+              "price": 165,
+              "order": 0,
+              "size": 42,
+              "color": "gray",
+              "brand": "asics",
+              "images": "http://localhost:5000/products/asics/4.webp",
+              "quantity": 2
+            }
+          ],
+          "address": "paris",
+          "paymentMethod": "Cash on Delivery",
+          "status": "pending"
+        },
+        {
+          "id": 1735406159958,
+          "date": "2024-12-28T17:15:59.958Z",
+          "items": [
+            {
+              "id": "12",
+              "title": "asics",
+              "price": 165,
+              "order": 0,
+              "size": 42,
+              "color": "gray",
+              "brand": "asics",
+              "images": "http://localhost:5000/products/asics/4.webp",
+              "quantity": 2
+            },
+            {
+              "id": "49",
+              "title": "reebok",
+              "price": 95,
+              "order": 0,
+              "size": 44,
+              "color": "gray",
+              "brand": "reebok",
+              "images": "http://localhost:5000/products/reebok/1.webp",
+              "quantity": 1
+            }
+          ],
+          "address": "paris",
+          "paymentMethod": "PayPal",
+          "status": "pending"
+        },
+        {
+          "id": 1735433007962,
+          "date": "2024-12-29T00:43:27.962Z",
+          "items": [
+            {
+              "id": "49",
+              "title": "reebok",
+              "price": 95,
+              "order": 0,
+              "size": 44,
+              "color": "gray",
+              "brand": "reebok",
+              "images": "http://localhost:5000/products/reebok/1.webp",
+              "quantity": 3
+            }
+          ],
+          "address": "paris",
+          "paymentMethod": "PayPal",
+          "status": "pending"
         }
       ],
       "wishlist": [],
       "addresses": [
-        "new york"
+        "new york",
+        "paris"
       ]
     }
   ],
